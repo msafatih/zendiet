@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186333214756",
+    "project_id": "zendiet-e2110",
+    "storage_bucket": "zendiet-e2110.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186333214756:android:def5ebaca7c63830f9c0b1",
+        "android_client_info": {
+          "package_name": "com.example.zendiet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvpmnv-H46TL8xvTOT5UNEQyr0qjZRbb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
