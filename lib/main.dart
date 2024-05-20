@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../providers/user_provider.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -9,24 +8,15 @@ import '../responsive/web_screen_layout.dart';
 import '../screens/login_screen.dart';
 import '../utils/colors.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // initialise app based on platform- web or mobile
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyAkWykwtztqfUsx9iDWZzv6zS_VRrFVtgI",
-          authDomain: "zendiet-e2110.firebaseapp.com",
-          projectId: "zendiet-e2110",
-          storageBucket: 'zendiet-e2110.appspot.com',
-          messagingSenderId: "186333214756",
-          appId: "1:186333214756:web:8dea72d1d6da34a3f9c0b1"),
-    );
-  } else {
-    await Firebase.initializeApp();
-  }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
