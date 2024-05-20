@@ -313,7 +313,7 @@ class _PostCardState extends State<PostCard> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     DateFormat.yMMMd()
-                        .format(widget.snap['datePublished'].toDate()),
+                        .format(DateTime.parse(widget.snap['datePublished'])),
                     style: const TextStyle(
                       color: secondaryColor,
                     ),
