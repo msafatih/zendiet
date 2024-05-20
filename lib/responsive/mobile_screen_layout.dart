@@ -4,7 +4,7 @@ import 'package:zendiet/utils/colors.dart';
 import 'package:zendiet/utils/global_variable.dart';
 
 class MobileScreenLayout extends StatefulWidget {
-  const MobileScreenLayout({Key? key}) : super(key: key);
+  const MobileScreenLayout({super.key});
 
   @override
   State<MobileScreenLayout> createState() => _MobileScreenLayoutState();

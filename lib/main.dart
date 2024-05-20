@@ -17,13 +17,12 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyAkWykwtztqfUsx9iDWZzv6zS_VRrFVtgI",
-            authDomain: "zendiet-e2110.firebaseapp.com",
-            projectId: "zendiet-e2110",
-            storageBucket: 'zendiet-e2110.appspot.com',
-            messagingSenderId: "186333214756",
-            appId: "1:186333214756:web:8dea72d1d6da34a3f9c0b1"
-      ),
+          apiKey: "AIzaSyAkWykwtztqfUsx9iDWZzv6zS_VRrFVtgI",
+          authDomain: "zendiet-e2110.firebaseapp.com",
+          projectId: "zendiet-e2110",
+          storageBucket: 'zendiet-e2110.appspot.com',
+          messagingSenderId: "186333214756",
+          appId: "1:186333214756:web:8dea72d1d6da34a3f9c0b1"),
     );
   } else {
     await Firebase.initializeApp();
@@ -32,13 +31,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider(),),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -11,7 +11,7 @@ import 'package:zendiet/utils/utils.dart';
 import 'package:zendiet/widgets/text_field_input.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -52,7 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       // navigate to the home screen
-      if (context.mounted) {
+      if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const ResponsiveLayout(
@@ -67,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       // show the error
-      if (context.mounted) {
+      if (mounted) {
         showSnackBar(context, res);
       }
     }
@@ -96,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 flex: 2,
                 child: Container(),
               ),
-            Image.asset(
+              Image.asset(
                 'assets/mainlogo.png',
                 height: 64,
               ),

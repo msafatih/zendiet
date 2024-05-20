@@ -9,13 +9,13 @@ import 'package:zendiet/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({Key? key}) : super(key: key);
+  const AddPostScreen({super.key});
 
   @override
-  _AddPostScreenState createState() => _AddPostScreenState();
+  AddPostScreenState createState() => AddPostScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   bool isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
@@ -78,7 +78,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         setState(() {
           isLoading = false;
         });
-        if (context.mounted) {
+        if (mounted) {
           showSnackBar(
             context,
             'Posted!',
@@ -86,7 +86,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         }
         clearImage();
       } else {
-        if (context.mounted) {
+        if (mounted) {
           showSnackBar(context, res);
         }
       }
@@ -94,10 +94,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
       setState(() {
         isLoading = false;
       });
-      showSnackBar(
-        context,
-        err.toString(),
-      );
+      if (mounted) {
+        showSnackBar(
+          context,
+          err.toString(),
+        );
+      }
     }
   }
 

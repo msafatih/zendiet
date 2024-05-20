@@ -3,7 +3,7 @@ import 'package:zendiet/utils/colors.dart';
 import 'package:zendiet/utils/global_variable.dart';
 
 class WebScreenLayout extends StatefulWidget {
-  const WebScreenLayout({Key? key}) : super(key: key);
+  const WebScreenLayout({super.key});
 
   @override
   State<WebScreenLayout> createState() => _WebScreenLayoutState();
@@ -45,10 +45,10 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         centerTitle: false,
-        title:  Image.asset(
-                'assets/mainlogo.png',
-                height: 32,
-              ),
+        title: Image.asset(
+          'assets/mainlogo.png',
+          height: 32,
+        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -73,9 +73,9 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           ),
           IconButton(
             icon: Icon(
-                Icons.add_circle,
-                color: (_page == 3) ? primaryColor : secondaryColor,
-              ),
+              Icons.add_circle,
+              color: (_page == 3) ? primaryColor : secondaryColor,
+            ),
             onPressed: () => navigationTapped(3),
           ),
           IconButton(

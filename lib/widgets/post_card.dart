@@ -12,11 +12,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
-    Key? key,
+    super.key,
     required this.snap,
-  }) : super(key: key);
+  });
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -41,10 +41,12 @@ class _PostCardState extends State<PostCard> {
           .get();
       commentLen = snap.docs.length;
     } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
+      if (mounted) {
+        showSnackBar(
+          context,
+          err.toString(),
+        );
+      }
     }
     setState(() {});
   }
@@ -53,10 +55,12 @@ class _PostCardState extends State<PostCard> {
     try {
       await FireStoreMethods().deletePost(postId);
     } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
+      if (mounted) {
+        showSnackBar(
+          context,
+          err.toString(),
+        );
+      }
     }
   }
 

@@ -9,14 +9,14 @@ import 'package:zendiet/widgets/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final postId;
-  const CommentsScreen({Key? key, required this.postId}) : super(key: key);
+  final dynamic postId;
+  const CommentsScreen({super.key, required this.postId});
 
   @override
-  _CommentsScreenState createState() => _CommentsScreenState();
+  CommentsScreenState createState() => CommentsScreenState();
 }
 
-class _CommentsScreenState extends State<CommentsScreen> {
+class CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
 
@@ -31,16 +31,18 @@ class _CommentsScreenState extends State<CommentsScreen> {
       );
 
       if (res != 'success') {
-        if (context.mounted) showSnackBar(context, res);
+        if (mounted) showSnackBar(context, res);
       }
       setState(() {
         commentEditingController.text = "";
       });
     } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
+      if (mounted) {
+        showSnackBar(
+          context,
+          err.toString(),
+        );
+      }
     }
   }
 

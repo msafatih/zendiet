@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CalculateScreen extends StatefulWidget {
-const CalculateScreen({Key? key}) : super(key: key);
+  const CalculateScreen({super.key});
 
   @override
-  _CalculateScreenState createState() => _CalculateScreenState();
+  CalculateScreenState createState() => CalculateScreenState();
 }
 
-class _CalculateScreenState extends State<CalculateScreen> {
-  TextEditingController _weightController = TextEditingController();
-  TextEditingController _heightController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
+class CalculateScreenState extends State<CalculateScreen> {
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
   double _bmiResult = 0;
   double _idealBodyWeightResult = 0;
   double _dailyCalorieIntakeResult = 0;
@@ -21,8 +21,8 @@ class _CalculateScreenState extends State<CalculateScreen> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Perhitungan Kalori'),
-          bottom: TabBar(
+          title: const Text('Perhitungan Kalori'),
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'BMI Calculator'),
               Tab(text: 'Ideal Body Weight'),
@@ -43,36 +43,36 @@ class _CalculateScreenState extends State<CalculateScreen> {
 
   Widget _buildBMI() {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
             controller: _weightController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Berat (kg)',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextField(
             controller: _heightController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Tinggi (cm)',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               _calculateBMI();
             },
-            child: Text('Hitung BMI'),
+            child: const Text('Hitung BMI'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'BMI: $_bmiResult',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -81,28 +81,28 @@ class _CalculateScreenState extends State<CalculateScreen> {
 
   Widget _buildIdealBodyWeight() {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
             controller: _heightController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Tinggi (cm)',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               _calculateIdealBodyWeight();
             },
-            child: Text('Hitung Berat Badan Ideal'),
+            child: const Text('Hitung Berat Badan Ideal'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Berat Badan Ideal: $_idealBodyWeightResult kg',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -111,44 +111,44 @@ class _CalculateScreenState extends State<CalculateScreen> {
 
   Widget _buildDailyCalorieIntake() {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
             controller: _weightController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Berat (kg)',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextField(
             controller: _heightController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Tinggi (cm)',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextField(
             controller: _ageController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Usia',
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               _calculateDailyCalorieIntake();
             },
-            child: Text('Hitung Kebutuhan Kalori Harian'),
+            child: const Text('Hitung Kebutuhan Kalori Harian'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Kebutuhan Kalori Harian: $_dailyCalorieIntakeResult',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -178,7 +178,8 @@ class _CalculateScreenState extends State<CalculateScreen> {
     int age = int.tryParse(_ageController.text) ?? 0;
 
     setState(() {
-      _dailyCalorieIntakeResult = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+      _dailyCalorieIntakeResult =
+          (10 * weight) + (6.25 * height) - (5 * age) + 5;
     });
   }
 }

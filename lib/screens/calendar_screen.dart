@@ -4,7 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CalendarScreen extends StatefulWidget {
-  const CalendarScreen({Key? key}) : super(key: key);
+  const CalendarScreen({super.key});
 
   @override
   State<CalendarScreen> createState() => _CalendarScreenState();
@@ -68,19 +68,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Event'),
+          title: const Text('Add Event'),
           content: _AddEventDialogContent(),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                final _AddEventDialogContentState? state =
-                    context.findAncestorStateOfType<_AddEventDialogContentState>();
+                final _AddEventDialogContentState? state = context
+                    .findAncestorStateOfType<_AddEventDialogContentState>();
                 if (state != null) {
                   final title = state.titleController.text;
                   final note = state.noteController.text;
@@ -102,7 +102,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   }
                 }
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
           ],
         );
@@ -139,7 +139,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Date: ${event.date.toString()}'),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text('Note: ${event.note}'),
             ],
           ),
@@ -149,13 +149,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 _deleteEvent(event, day);
                 Navigator.of(context).pop();
               },
-              child: Text('Delete'),
+              child: const Text('Delete'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -167,10 +167,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome To Daily Plan"),
+        title: const Text("Welcome To Daily Plan"),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               _addEvent(selectedDay);
             },
@@ -186,44 +186,42 @@ class _CalendarScreenState extends State<CalendarScreen> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Text("Selected Day = " + selectedDay.toString().split(" ")[0]),
-          Container(
-            child: TableCalendar(
-              locale: "en_US",
-              rowHeight: 43,
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-              ),
-              calendarFormat: format,
-              availableCalendarFormats: {
-                CalendarFormat.month: 'Month',
-                CalendarFormat.week: 'Week',
-              },
-              onFormatChanged: (CalendarFormat _format) {
-                setState(() {
-                  format = _format;
-                });
-              },
-              selectedDayPredicate: (day) => isSameDay(day, selectedDay),
-              focusedDay: focusedDay,
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              onDaySelected: _onDaySelected,
-              calendarStyle: CalendarStyle(
-                outsideDaysVisible: true,
-              ),
-              daysOfWeekStyle: DaysOfWeekStyle(
-                weekendStyle: TextStyle(
-                  color: Colors.red,
-                ),
-              ),
-              eventLoader: (day) {
-                return events[day] ?? [];
-              },
+          Text("Selected Day = ${selectedDay.toString().split(" ")[0]}"),
+          TableCalendar(
+            locale: "en_US",
+            rowHeight: 43,
+            headerStyle: const HeaderStyle(
+              formatButtonVisible: false,
+              titleCentered: true,
             ),
+            calendarFormat: format,
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Month',
+              CalendarFormat.week: 'Week',
+            },
+            onFormatChanged: (CalendarFormat format) {
+              setState(() {
+                format = format;
+              });
+            },
+            selectedDayPredicate: (day) => isSameDay(day, selectedDay),
+            focusedDay: focusedDay,
+            firstDay: DateTime.utc(2010, 10, 16),
+            lastDay: DateTime.utc(2030, 3, 14),
+            onDaySelected: _onDaySelected,
+            calendarStyle: const CalendarStyle(
+              outsideDaysVisible: true,
+            ),
+            daysOfWeekStyle: const DaysOfWeekStyle(
+              weekendStyle: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            eventLoader: (day) {
+              return events[day] ?? [];
+            },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
               itemCount: events[selectedDay]?.length ?? 0,
@@ -305,11 +303,11 @@ class _AddEventDialogContentState extends State<_AddEventDialogContent> {
       children: <Widget>[
         TextField(
           controller: titleController,
-          decoration: InputDecoration(labelText: 'Title'),
+          decoration: const InputDecoration(labelText: 'Title'),
         ),
         TextField(
           controller: noteController,
-          decoration: InputDecoration(labelText: 'Note'),
+          decoration: const InputDecoration(labelText: 'Note'),
         ),
       ],
     );

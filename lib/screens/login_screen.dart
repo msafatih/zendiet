@@ -10,7 +10,7 @@ import 'package:zendiet/utils/utils.dart';
 import 'package:zendiet/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
-      if (context.mounted) {
+      if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => const ResponsiveLayout(
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isLoading = false;
       });
-      if (context.mounted) {
+      if (mounted) {
         showSnackBar(context, res);
       }
     }

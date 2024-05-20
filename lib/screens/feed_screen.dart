@@ -5,7 +5,7 @@ import 'package:zendiet/utils/global_variable.dart';
 import 'package:zendiet/widgets/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+  const FeedScreen({super.key});
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -24,7 +24,7 @@ class _FeedScreenState extends State<FeedScreen> {
           : AppBar(
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
-              title:  Image.asset(
+              title: Image.asset(
                 'assets/mainlogo.png',
                 height: 32,
               ),
