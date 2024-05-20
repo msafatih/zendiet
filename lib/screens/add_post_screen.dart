@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:zendiet/providers/user_provider.dart';
-import 'package:zendiet/resources/firestore_methods.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/utils.dart';
+import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
+import '../utils/colors.dart';
+import '../utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {

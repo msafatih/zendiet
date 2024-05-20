@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zendiet/providers/user_provider.dart';
-import 'package:zendiet/utils/global_variable.dart';
+import '../providers/user_provider.dart';
+import '../utils/global_variable.dart';
 import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatefulWidget {

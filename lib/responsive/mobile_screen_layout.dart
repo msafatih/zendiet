@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/global_variable.dart';
+import '../utils/colors.dart';
+import '../utils/global_variable.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});

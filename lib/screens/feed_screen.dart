@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/global_variable.dart';
-import 'package:zendiet/widgets/post_card.dart';
+import '../utils/colors.dart';
+import '../utils/global_variable.dart';
+import '../widgets/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});

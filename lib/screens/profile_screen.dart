@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/resources/auth_methods.dart';
-import 'package:zendiet/resources/firestore_methods.dart';
-import 'package:zendiet/screens/login_screen.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/utils.dart';
-import 'package:zendiet/widgets/follow_button.dart';
+import '../resources/auth_methods.dart';
+import '../resources/firestore_methods.dart';
+import '../screens/login_screen.dart';
+import '../utils/colors.dart';
+import '../utils/utils.dart';
+import '../widgets/follow_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;

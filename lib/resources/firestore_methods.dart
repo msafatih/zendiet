@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:zendiet/models/post.dart';
-import 'package:zendiet/resources/storage_methods.dart';
+import '../models/post.dart';
+import '../resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {

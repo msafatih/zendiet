@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/screens/add_post_screen.dart';
-import 'package:zendiet/screens/calculate_screen.dart';
-import 'package:zendiet/screens/calendar_screen.dart';
-import 'package:zendiet/screens/feed_screen.dart';
-import 'package:zendiet/screens/profile_screen.dart';
-import 'package:zendiet/screens/search_screen.dart';
+import '../screens/add_post_screen.dart';
+import '../screens/calculate_screen.dart';
+import '../screens/calendar_screen.dart';
+import '../screens/feed_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/search_screen.dart';
 
 const webScreenSize = 600;
 

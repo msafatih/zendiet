@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:zendiet/models/user.dart';
-import 'package:zendiet/resources/auth_methods.dart';
+import '../models/user.dart';
+import '../resources/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   User? _user;

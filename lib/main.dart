@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/providers/user_provider.dart';
-import 'package:zendiet/responsive/mobile_screen_layout.dart';
-import 'package:zendiet/responsive/responsive_layout.dart';
-import 'package:zendiet/responsive/web_screen_layout.dart';
-import 'package:zendiet/screens/login_screen.dart';
-import 'package:zendiet/utils/colors.dart';
+import '../providers/user_provider.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
+import '../screens/login_screen.dart';
+import '../utils/colors.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

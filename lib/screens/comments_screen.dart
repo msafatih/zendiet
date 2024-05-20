@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:zendiet/models/user.dart';
-import 'package:zendiet/providers/user_provider.dart';
-import 'package:zendiet/resources/firestore_methods.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/utils.dart';
-import 'package:zendiet/widgets/comment_card.dart';
+import '../models/user.dart';
+import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
+import '../utils/colors.dart';
+import '../utils/utils.dart';
+import '../widgets/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {

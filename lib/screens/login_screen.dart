@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:zendiet/resources/auth_methods.dart';
-import 'package:zendiet/responsive/mobile_screen_layout.dart';
-import 'package:zendiet/responsive/responsive_layout.dart';
-import 'package:zendiet/responsive/web_screen_layout.dart';
-import 'package:zendiet/screens/signup_screen.dart';
-import 'package:zendiet/utils/colors.dart';
-import 'package:zendiet/utils/global_variable.dart';
-import 'package:zendiet/utils/utils.dart';
-import 'package:zendiet/widgets/text_field_input.dart';
+import '../resources/auth_methods.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
+import '../screens/signup_screen.dart';
+import '../utils/colors.dart';
+import '../utils/global_variable.dart';
+import '../utils/utils.dart';
+import '../widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
