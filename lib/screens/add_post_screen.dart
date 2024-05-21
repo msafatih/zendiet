@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../providers/user_provider.dart';
@@ -142,9 +141,9 @@ class AddPostScreenState extends State<AddPostScreen> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => postImage(
-                    userProvider.getUser.uid,
-                    userProvider.getUser.username,
-                    userProvider.getUser.photoUrl,
+                    userProvider.getUser!.uid,
+                    userProvider.getUser!.username,
+                    userProvider.getUser!.photoUrl,
                   ),
                   child: const Text(
                     "Post",
@@ -169,7 +168,7 @@ class AddPostScreenState extends State<AddPostScreen> {
                   children: <Widget>[
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                        userProvider.getUser.photoUrl,
+                        userProvider.getUser!.photoUrl,
                       ),
                     ),
                     SizedBox(

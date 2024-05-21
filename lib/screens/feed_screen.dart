@@ -28,15 +28,6 @@ class _FeedScreenState extends State<FeedScreen> {
                 'assets/mainlogo.png',
                 height: 32,
               ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.messenger_outline,
-                    color: primaryColor,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
@@ -46,19 +37,26 @@ class _FeedScreenState extends State<FeedScreen> {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) => Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: width > webScreenSize ? width * 0.3 : 0,
+                    vertical: width > webScreenSize ? 15 : 0,
+                  ),
+                  child: PostCard(
+                    snap: snapshot.data!.docs[index].data(),
+                  ),
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           }
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (ctx, index) => Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: width > webScreenSize ? width * 0.3 : 0,
-                vertical: width > webScreenSize ? 15 : 0,
-              ),
-              child: PostCard(
-                snap: snapshot.data!.docs[index].data(),
-              ),
-            ),
-          );
         },
       ),
     );

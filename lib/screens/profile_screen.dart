@@ -7,9 +7,11 @@ import '../screens/login_screen.dart';
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 import '../widgets/follow_button.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
+
   const ProfileScreen({super.key, required this.uid});
 
   @override
@@ -84,17 +86,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.only(left: 16, right: 16),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(
-                              userData['photoUrl'],
-                            ),
-                            radius: 40,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                backgroundImage: NetworkImage(
+                                  userData['photoUrl'],
+                                ),
+                                radius: 40,
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                userData['username'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
                           ),
                           Expanded(
                             flex: 1,
@@ -117,6 +131,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     FirebaseAuth.instance.currentUser!.uid ==
                                             widget.uid
                                         ? FollowButton(
+                                            width: 250,
+                                            height: 27,
                                             text: 'Sign Out',
                                             backgroundColor:
                                                 mobileBackgroundColor,
@@ -137,6 +153,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           )
                                         : isFollowing
                                             ? FollowButton(
+                                                width: 250,
+                                                height: 27,
                                                 text: 'Unfollow',
                                                 backgroundColor: Colors.white,
                                                 textColor: Colors.black,
@@ -156,6 +174,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 },
                                               )
                                             : FollowButton(
+                                                width: 250,
+                                                height: 27,
                                                 text: 'Follow',
                                                 backgroundColor: Colors.blue,
                                                 textColor: Colors.white,
@@ -184,28 +204,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.only(
-                          top: 15,
-                        ),
-                        child: Text(
-                          userData['username'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
                           top: 1,
                         ),
                         child: Text(
                           userData['bio'],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
+                FollowButton(
+                  width: MediaQuery.of(context).size.width,
+                  height: 27,
+                  text: 'Edit Profile',
+                  backgroundColor: mobileBackgroundColor,
+                  textColor: primaryColor,
+                  borderColor: Colors.grey,
+                  function: () async {
+                    if (context.mounted) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileScreen(
+                            uid: widget.uid,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
                 const Divider(),
+                const SizedBox(height: 2),
                 FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('posts')
@@ -259,15 +287,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 4),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
-            ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey,
           ),
         ),
       ],

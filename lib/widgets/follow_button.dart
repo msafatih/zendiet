@@ -6,13 +6,18 @@ class FollowButton extends StatelessWidget {
   final Color borderColor;
   final String text;
   final Color textColor;
+  final double height;
+  final double width;
+
   const FollowButton(
       {super.key,
       required this.backgroundColor,
       required this.borderColor,
       required this.text,
       required this.textColor,
-      this.function});
+      this.function,
+      required this.height,
+      required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +34,10 @@ class FollowButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           alignment: Alignment.center,
-          width: 250,
-          height: 27,
+          // width: 250,
+          // height: 27,
+          width: width,
+          height: height,
           child: Text(
             text,
             style: TextStyle(

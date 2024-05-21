@@ -37,13 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
       if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
-              ),
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
             ),
-            (route) => false);
+          ),
+          (route) => false,
+        );
 
         setState(() {
           _isLoading = false;
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textEditingController: _emailController,
               ),
               const SizedBox(
-                height: 24,
+                height: 16,
               ),
               TextFieldInput(
                 hintText: 'Enter your password',
@@ -99,12 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPass: true,
               ),
               const SizedBox(
-                height: 24,
+                height: 16,
               ),
               InkWell(
-                onTap: loginUser,
+                onTap: !_isLoading ? loginUser : null,
                 child: Container(
                   width: double.infinity,
+                  height: 45,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
@@ -117,8 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? const Text(
                           'Log in',
                         )
-                      : const CircularProgressIndicator(
-                          color: primaryColor,
+                      : const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
                         ),
                 ),
               ),
@@ -135,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
-                      'Dont have an account?',
+                      'Don\'t have an account?',
                     ),
                   ),
                   GestureDetector(
@@ -147,15 +153,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        ' Signup.',
+                        ' Sign Up.',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: blueColor,
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              )
             ],
           ),
         ),
