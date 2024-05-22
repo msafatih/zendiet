@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../utils/colors.dart';
+import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
 import '../utils/global_variable.dart';
 
 class MobileScreenLayout extends StatefulWidget {
@@ -10,93 +10,63 @@ class MobileScreenLayout extends StatefulWidget {
   State<MobileScreenLayout> createState() => _MobileScreenLayoutState();
 }
 
-class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  int _page = 0;
-  late PageController pageController; // for tabs animation
+class _MobileScreenLayoutState extends State<MobileScreenLayout>
+    with TickerProviderStateMixin {
+  MotionTabBarController? _motionTabBarController;
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
+    _motionTabBarController = MotionTabBarController(
+      length: homeScreenItems.length,
+      vsync: this,
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    pageController.dispose();
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      _page = page;
-    });
-  }
-
-  void navigationTapped(int page) {
-    //Animating Page
-    pageController.jumpToPage(page);
+    _motionTabBarController?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: homeScreenItems,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calendar_month,
-              color: (_page == 3) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calculate,
-              color: (_page == 4) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 5) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
-          ),
+      bottomNavigationBar: MotionTabBar(
+        controller: _motionTabBarController,
+        initialSelectedTab: "Home",
+        labels: const ["Home", "Search", "Post", "Plan", "BMI", "Profile"],
+        icons: const [
+          Icons.home,
+          Icons.search,
+          Icons.add_circle,
+          Icons.calendar_month,
+          Icons.calculate,
+          Icons.person,
         ],
-        onTap: navigationTapped,
-        currentIndex: _page,
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+        tabIconColor: Colors.grey,
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Colors.white24,
+        tabIconSelectedColor: Colors.white,
+        tabBarColor: Colors.black,
+        onTabItemSelected: (int value) {
+          setState(() {
+            _motionTabBarController!.index = value;
+          });
+        },
+      ),
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _motionTabBarController,
+        children: homeScreenItems,
       ),
     );
   }

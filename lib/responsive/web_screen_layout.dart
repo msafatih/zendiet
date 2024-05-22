@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/colors.dart';
+import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
 import '../utils/global_variable.dart';
 
 class WebScreenLayout extends StatefulWidget {
@@ -9,95 +10,62 @@ class WebScreenLayout extends StatefulWidget {
   State<WebScreenLayout> createState() => _WebScreenLayoutState();
 }
 
-class _WebScreenLayoutState extends State<WebScreenLayout> {
-  int _page = 0;
-  late PageController pageController; // for tabs animation
+class _WebScreenLayoutState extends State<WebScreenLayout>
+    with TickerProviderStateMixin {
+  MotionTabBarController? _motionTabBarController;
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
+    _motionTabBarController = MotionTabBarController(
+      length: homeScreenItems.length,
+      vsync: this,
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    pageController.dispose();
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      _page = page;
-    });
-  }
-
-  void navigationTapped(int page) {
-    //Animating Page
-    pageController.jumpToPage(page);
-    setState(() {
-      _page = page;
-    });
+    _motionTabBarController?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        centerTitle: false,
-        title: Image.asset(
-          'assets/mainlogo.png',
-          height: 32,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: _page == 0 ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(0),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: _page == 1 ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(1),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.add_circle,
-              color: (_page == 2) ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(3),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.calendar_month,
-              color: (_page == 3) ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(4),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.calculate,
-              color: (_page == 4) ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(5),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 5) ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(6),
-          ),
+      bottomNavigationBar: MotionTabBar(
+        controller: _motionTabBarController,
+        initialSelectedTab: "Home",
+        labels: const ["Home", "Search", "Post", "Plan", "BMI", "Profile"],
+        icons: const [
+          Icons.home,
+          Icons.search,
+          Icons.add_circle,
+          Icons.calendar_month,
+          Icons.calculate,
+          Icons.person,
         ],
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+        tabIconColor: Colors.grey,
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Colors.white24,
+        tabIconSelectedColor: Colors.white,
+        tabBarColor: Colors.black,
+        onTabItemSelected: (int value) {
+          setState(() {
+            _motionTabBarController!.index = value;
+          });
+        },
       ),
-      body: PageView(
+      body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: onPageChanged,
+        controller: _motionTabBarController,
         children: homeScreenItems,
       ),
     );

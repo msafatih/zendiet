@@ -85,8 +85,10 @@ class _PostCardState extends State<PostCard> {
         vertical: 10,
       ),
       child: user == null
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             )
           : Column(
               children: [
@@ -249,17 +251,11 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ),
                     IconButton(
-                        icon: const Icon(
-                          Icons.send,
-                        ),
-                        onPressed: () {}),
-                    Expanded(
-                        child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                          icon: const Icon(Icons.bookmark_border),
-                          onPressed: () {}),
-                    ))
+                      icon: const Icon(
+                        Icons.send,
+                      ),
+                      onPressed: () {},
+                    )
                   ],
                 ),
                 //DESCRIPTION AND NUMBER OF COMMENTS
