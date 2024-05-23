@@ -68,7 +68,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               backgroundColor: mobileBackgroundColor,
               title: const Text(
                 'Edit Profile',
-                style: TextStyle(fontSize: 16),
               ),
               centerTitle: false,
             ),
