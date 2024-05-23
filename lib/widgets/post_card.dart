@@ -85,14 +85,9 @@ class _PostCardState extends State<PostCard> {
         vertical: 10,
       ),
       child: user == null
-          ? const Expanded(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+          ? Container()
           : Column(
               children: [
-                // HEADER SECTION OF THE POST
                 Container(
                   padding: const EdgeInsets.symmetric(
                     vertical: 4,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,8 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
   late DateTime today;
   late CalendarFormat format;
   late DateTime selectedDay;
@@ -46,6 +49,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void _saveEvents() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('events', jsonEncode(_encodeMap(events)));
+    _loadEvents();
   }
 
   Map<String, dynamic> _encodeMap(Map<DateTime, List<Event>> map) {
@@ -69,7 +73,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Add Event'),
-          content: _AddEventDialogContent(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+              ),
+              TextField(
+                controller: noteController,
+                decoration: const InputDecoration(labelText: 'Note'),
+              ),
+            ],
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -79,27 +95,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             TextButton(
               onPressed: () {
-                final _AddEventDialogContentState? state = context
-                    .findAncestorStateOfType<_AddEventDialogContentState>();
-                if (state != null) {
-                  final title = state.titleController.text;
-                  final note = state.noteController.text;
-                  if (title.isNotEmpty) {
-                    final newEvent = Event(
-                      date: day,
-                      title: title,
-                      note: note,
-                    );
-                    setState(() {
-                      if (events[day] != null) {
-                        events[day]!.add(newEvent);
-                      } else {
-                        events[day] = [newEvent];
-                      }
-                    });
-                    _saveEvents();
-                    Navigator.of(context).pop(newEvent);
-                  }
+                if (titleController.text.isNotEmpty ||
+                    noteController.text.isNotEmpty) {
+                  final newEvent = Event(
+                    date: day,
+                    title: titleController.text,
+                    note: noteController.text,
+                  );
+                  _saveEvents();
+                  Navigator.of(context).pop(newEvent);
                 }
               },
               child: const Text('Add'),
@@ -138,7 +142,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Date: ${event.date.toString()}'),
+              Text(
+                  'Date: ${DateFormat.yMMMd().format(DateTime.parse(event.date.toString()))}'),
               const SizedBox(height: 8),
               Text('Note: ${event.note}'),
             ],
@@ -166,16 +171,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white24,
+        shape: const CircleBorder(),
+        onPressed: () {
+          _addEvent(selectedDay);
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
-        title: const Text("Welcome To Daily Plan"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              _addEvent(selectedDay);
-            },
-          ),
-        ],
+        title: const Text("Daily Plan"),
       ),
       body: content(),
     );
@@ -186,7 +191,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Text("Selected Day = ${selectedDay.toString().split(" ")[0]}"),
           TableCalendar(
             locale: "en_US",
             rowHeight: 43,
@@ -211,6 +215,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
             onDaySelected: _onDaySelected,
             calendarStyle: const CalendarStyle(
               outsideDaysVisible: true,
+              markerDecoration:
+                  BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              selectedDecoration:
+                  BoxDecoration(color: Colors.white70, shape: BoxShape.circle),
+              todayDecoration:
+                  BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
             ),
             daysOfWeekStyle: const DaysOfWeekStyle(
               weekendStyle: TextStyle(
@@ -235,7 +245,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     child: ListTile(
                       title: Text(event.title),
                       subtitle: Text(
-                        event.date.toString(),
+                        DateFormat.yMMMd()
+                            .format(DateTime.parse(event.date.toString())),
                       ),
                     ),
                   ),
@@ -270,46 +281,5 @@ class Event {
       'title': title,
       'note': note,
     };
-  }
-}
-
-class _AddEventDialogContent extends StatefulWidget {
-  @override
-  _AddEventDialogContentState createState() => _AddEventDialogContentState();
-}
-
-class _AddEventDialogContentState extends State<_AddEventDialogContent> {
-  late TextEditingController titleController;
-  late TextEditingController noteController;
-
-  @override
-  void initState() {
-    super.initState();
-    titleController = TextEditingController();
-    noteController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    titleController.dispose();
-    noteController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        TextField(
-          controller: titleController,
-          decoration: const InputDecoration(labelText: 'Title'),
-        ),
-        TextField(
-          controller: noteController,
-          decoration: const InputDecoration(labelText: 'Note'),
-        ),
-      ],
-    );
   }
 }
