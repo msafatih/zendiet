@@ -82,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         backgroundImage: NetworkImage(
                           userData['photoUrl'],
                         ),
-                        radius: 40,
+                        radius: 65,
                       ),
                       const SizedBox(height: 25),
                       TextField(
@@ -117,7 +117,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       )
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      height: 45,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                        ),
+                        color: blueColor,
+                      ),
+                      child: const Text(
+                        'Update',
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           );

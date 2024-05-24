@@ -6,7 +6,7 @@ class Post {
   final String username;
   final dynamic likes;
   final String postId;
-  final DateTime datePublished;
+  final String datePublished;
   final String postUrl;
   final String profImage;
 

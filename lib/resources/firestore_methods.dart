@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import '../models/post.dart';
 import '../resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -21,7 +22,7 @@ class FireStoreMethods {
         username: username,
         likes: [],
         postId: postId,
-        datePublished: DateTime.now(),
+        datePublished: DateFormat("yyyy-mm-dd").format(DateTime.now()),
         postUrl: photoUrl,
         profImage: profImage,
       );

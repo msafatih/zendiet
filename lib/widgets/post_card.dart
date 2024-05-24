@@ -250,6 +250,15 @@ class _PostCardState extends State<PostCard> {
                         Icons.send,
                       ),
                       onPressed: () {},
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: IconButton(
+                          icon: const Icon(Icons.bookmark_border),
+                          onPressed: () {},
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -261,14 +270,15 @@ class _PostCardState extends State<PostCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       DefaultTextStyle(
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontWeight: FontWeight.w800),
-                          child: Text(
-                            '${widget.snap['likes'].length} likes',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          )),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(fontWeight: FontWeight.w800),
+                        child: Text(
+                          '${widget.snap['likes'].length} likes',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.only(
