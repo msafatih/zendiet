@@ -245,12 +245,22 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: IconButton(
-                          icon: const Icon(Icons.bookmark_border),
-                          onPressed: () {},
+                    LikeAnimation(
+                      isAnimating: widget.snap['saved'].contains(user!.uid),
+                      smallLike: true,
+                      child: IconButton(
+                        icon: widget.snap['saved'].contains(user!.uid)
+                            ? const Icon(
+                                Icons.bookmark,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.bookmark_border,
+                              ),
+                        onPressed: () => FireStoreMethods().savePost(
+                          widget.snap['postId'].toString(),
+                          user!.uid,
+                          widget.snap['saved'],
                         ),
                       ),
                     )

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../resources/firestore_methods.dart';
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 
@@ -43,6 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         userNameController.text = userData['username'];
         pronounController.text = userData['pronoun'];
         bioController.text = userData['bio'];
+        linkController.text = userData['link'];
       });
     } catch (e) {
       if (mounted) {
@@ -55,6 +57,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  void updateUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await FireStoreMethods().updateProfile(
+      widget.uid,
+      fullNameController.text,
+      userNameController.text,
+      pronounController.text,
+      bioController.text,
+      linkController.text,
+    );
+    if (res == 'success') {
+      if (mounted) {
+        getData();
+        if (mounted) {
+          showSnackBar(context, res);
+        }
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      if (mounted) {
+        showSnackBar(context, res);
+      }
+    }
   }
 
   @override
@@ -122,7 +153,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => updateUser(),
                     child: Container(
                       width: double.infinity,
                       height: 45,

@@ -226,8 +226,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                        const Center(
-                          child: Text("No items saved"),
+                        ListView(
+                          children: [
+                            const SizedBox(height: 15),
+                            FutureBuilder(
+                              future: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+
+                                List<DocumentSnapshot> postSavedUser = [];
+                                List<DocumentSnapshot> postList =
+                                    snapshot.data!.docs;
+                                for (DocumentSnapshot docSnapshot in postList) {
+                                  List<String> itemDetailList = (docSnapshot[
+                                          'saved'] as List)
+                                      .map((itemDetail) => itemDetail as String)
+                                      .toList();
+                                  for (String docSnapshotUser
+                                      in itemDetailList) {
+                                    if (docSnapshotUser == widget.uid) {
+                                      postSavedUser.add(docSnapshot);
+                                    }
+                                  }
+                                }
+
+                                return GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: postSavedUser.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 1.5,
+                                    childAspectRatio: 1,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    var snapshotData = postSavedUser[index];
+                                    return SizedBox(
+                                      child: Image(
+                                        image: NetworkImage(
+                                            snapshotData['postUrl']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            )
+                          ],
                         )
                       ],
                     ),

@@ -55,6 +55,28 @@ class FireStoreMethods {
     return res;
   }
 
+  //save post
+  Future<String> savePost(String postId, String uid, List save) async {
+    String res = "Some error occurred";
+    try {
+      if (save.contains(uid)) {
+        // if the saved list contains the user uid, we need to remove it
+        _firestore.collection('posts').doc(postId).update({
+          'saved': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        // else we need to add uid to the saved array
+        _firestore.collection('posts').doc(postId).update({
+          'saved': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   // Post comment
   Future<String> postComment(String postId, String text, String uid,
       String name, String profilePic) async {
@@ -124,5 +146,23 @@ class FireStoreMethods {
     } catch (e) {
       if (kDebugMode) print(e.toString());
     }
+  }
+
+  Future<String> updateProfile(String uid, String fullname, String username,
+      String pronoun, String bio, String link) async {
+    String res = "Some error occurred";
+    try {
+      _firestore.collection('users').doc(uid).update({
+        'fullName': fullname,
+        'username': username,
+        'pronoun': pronoun,
+        'bio': bio,
+        'link': link
+      });
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 }
