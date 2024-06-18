@@ -148,6 +148,19 @@ class FireStoreMethods {
     }
   }
 
+  Future<String> updatePhotoProfile(String uid, String photoUrl) async {
+    String res = "Some error occurred";
+    try {
+      _firestore.collection('users').doc(uid).update({
+        'photoUrl': photoUrl,
+      });
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   Future<String> updateProfile(String uid, String fullname, String username,
       String pronoun, String bio, String link) async {
     String res = "Some error occurred";

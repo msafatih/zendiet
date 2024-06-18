@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../resources/firestore_methods.dart';
+import '../resources/storage_methods.dart';
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 
@@ -21,6 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController pronounController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   TextEditingController linkController = TextEditingController();
+  File? pickedImage;
 
   @override
   void initState() {
@@ -57,6 +63,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  void pickedImageDialog() {
+    showDialog<ImageSource>(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Text('Choose image source'),
+        actions: [
+          ElevatedButton(
+            child: const Text('Camera'),
+            onPressed: () => Navigator.pop(context, ImageSource.camera),
+          ),
+          ElevatedButton(
+            child: const Text('Gallery'),
+            onPressed: () => Navigator.pop(context, ImageSource.gallery),
+          ),
+        ],
+      ),
+    ).then((ImageSource? source) async {
+      if (source == null) return;
+
+      final pickedFile = await ImagePicker().pickImage(source: source);
+      if (pickedFile == null) return;
+
+      setState(() => pickedImage = File(pickedFile.path));
+      if (pickedImage != null) {
+        setState(() {
+          isLoading = true;
+        });
+        Uint8List file = pickedImage!.readAsBytesSync();
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        updatePhotoUser(photoUrl);
+      }
+    });
+  }
+
+  void updatePhotoUser(String photoUrl) async {
+    String res = await FireStoreMethods().updatePhotoProfile(
+      widget.uid,
+      photoUrl,
+    );
+    if (res == 'success') {
+      if (mounted) {
+        getData();
+        if (mounted) {
+          showSnackBar(context, res);
+        }
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      if (mounted) {
+        showSnackBar(context, res);
+      }
+    }
   }
 
   void updateUser() async {
@@ -108,12 +171,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        backgroundImage: NetworkImage(
-                          userData['photoUrl'],
-                        ),
-                        radius: 65,
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            backgroundImage: NetworkImage(
+                              userData['photoUrl'],
+                            ),
+                            radius: 65,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: -25,
+                            child: RawMaterialButton(
+                              onPressed: () => pickedImageDialog(),
+                              elevation: 2.0,
+                              fillColor: const Color.fromARGB(255, 0, 0, 0),
+                              padding: const EdgeInsets.all(8),
+                              shape: const CircleBorder(),
+                              child: const Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(height: 25),
                       TextField(
